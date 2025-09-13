@@ -11,11 +11,12 @@ type Props = {
 export const Pagination: React.FC<Props> = ({
   total,
   perPage,
-  currentPage,
+  currentPage = 1,
   onPageChange,
 }) => {
-  const pageCount = Math.ceil(total / perPage);
-  const pages = Array.from({ length: pageCount }, (_, i) => i + 1).map(n => n);
+  const safePerPage = perPage > 0 ? perPage : 1
+  const pageCount = Math.ceil(total / safePerPage);
+  const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
   return (
     <ul className="pagination">
@@ -29,14 +30,14 @@ export const Pagination: React.FC<Props> = ({
           data-cy="prevLink"
           className="page-link"
           href="#prev"
-          aria-disabled={(currentPage !== 1 ) ? "false" : "true"}
+          aria-disabled={currentPage !== 1 ? 'false' : 'true'}
         >
           «
         </a>
       </li>
       {pages.map((count, index) => (
         <li
-          key={index}
+          key={count}
           className={classNa('page-item', {
             active: currentPage === count,
           })}
@@ -52,7 +53,6 @@ export const Pagination: React.FC<Props> = ({
         </li>
       ))}
       <li
-
         className={classNa('page-item', {
           disabled: currentPage >= pages.length,
         })}
@@ -66,7 +66,7 @@ export const Pagination: React.FC<Props> = ({
           data-cy="nextLink"
           className="page-link"
           href="#next"
-          aria-disabled={(currentPage < pages.length) ? "false" : "true"}
+          aria-disabled={currentPage < pages.length ? 'false' : 'true'}
         >
           »
         </a>

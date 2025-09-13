@@ -8,29 +8,29 @@ import { getNumbers } from './utils';
 const items = getNumbers(1, 42).map(n => `Item ${n}`);
 
 export const App: React.FC = () => {
-  const [coutlist, setCountlist] = useState<number>(5);
+  const [perPage, setPerPage] = useState<number>(5);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const start = 1 + (currentPage - 1) * coutlist;
-  const end = Math.min(coutlist * currentPage, items.length);
+  const start = 1 + (currentPage - 1) * perPage;
+  const end = Math.min(perPage * currentPage, items.length);
 
   return (
     <div className="container">
       <h1>Items with Pagination</h1>
 
       <p className="lead" data-cy="info">
-        Page {currentPage} {`(items ${start} - ${end} of 42)`}
+        Page {currentPage} {`(items ${start} - ${end} of ${items.length})`}
       </p>
 
       <div className="form-group row">
         <div className="col-3 col-sm-2 col-xl-1">
           <select
-            defaultValue={5}
+            defaultValue={perPage}
             data-cy="perPageSelector"
             id="perPageSelector"
             className="form-control"
             onChange={event => {
-              setCountlist(+event.target.value);
+              setPerPage(Number(event.target.value));
               setCurrentPage(1);
             }}
           >
@@ -47,11 +47,11 @@ export const App: React.FC = () => {
       </div>
       <Pagination
         total={items.length}
-        perPage={coutlist}
+        perPage={perPage}
         currentPage={currentPage}
-        onPageChange={setCurrentPage}
+        onPageChange={setCurrentPage }
       />
-      <Item start={start} end={end} items={coutlist} />
+      <Item start={start} end={end} />
     </div>
   );
 };

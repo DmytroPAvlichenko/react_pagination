@@ -14,7 +14,7 @@ export const Pagination: React.FC<Props> = ({
   currentPage = 1,
   onPageChange,
 }) => {
-  const safePerPage = perPage > 0 ? perPage : 1
+  const safePerPage = perPage > 0 ? perPage : 1;
   const pageCount = Math.ceil(total / safePerPage);
   const pages = Array.from({ length: pageCount }, (_, i) => i + 1);
 
@@ -22,11 +22,11 @@ export const Pagination: React.FC<Props> = ({
     <ul className="pagination">
       <li
         className={classNa('page-item', { disabled: currentPage === 1 })}
-        onClick={
-          currentPage > 1 ? () => onPageChange(currentPage - 1) : undefined
-        }
-      >
+        >
         <a
+        onClick={(e) =>
+          currentPage > 1 ? () => onPageChange(currentPage - 1) : e.preventDefault()
+        }
           data-cy="prevLink"
           className="page-link"
           href="#prev"
@@ -56,13 +56,13 @@ export const Pagination: React.FC<Props> = ({
         className={classNa('page-item', {
           disabled: currentPage >= pages.length,
         })}
-        onClick={
+        >
+        <a
+        onClick={(e) =>
           currentPage < pages.length
             ? () => onPageChange(currentPage + 1)
-            : undefined
+            : e.preventDefault()
         }
-      >
-        <a
           data-cy="nextLink"
           className="page-link"
           href="#next"

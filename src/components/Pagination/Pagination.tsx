@@ -20,13 +20,13 @@ export const Pagination: React.FC<Props> = ({
 
   return (
     <ul className="pagination">
-      <li
-        className={classNa('page-item', { disabled: currentPage === 1 })}
-        >
+      <li className={classNa('page-item', { disabled: currentPage === 1 })}>
         <a
-        onClick={(e) =>
-          currentPage > 1 ? () => onPageChange(currentPage - 1) : e.preventDefault()
-        }
+          onClick={e =>
+            currentPage > 1
+              ? () => onPageChange(currentPage - 1)
+              : e.preventDefault()
+          }
           data-cy="prevLink"
           className="page-link"
           href="#prev"
@@ -56,13 +56,13 @@ export const Pagination: React.FC<Props> = ({
         className={classNa('page-item', {
           disabled: currentPage >= pages.length,
         })}
-        >
+      >
         <a
-        onClick={(e) =>
-          currentPage < pages.length
-            ? () => onPageChange(currentPage + 1)
-            : e.preventDefault()
-        }
+          onClick={e =>
+            currentPage < pages.length
+              ? () => onPageChange(currentPage + 1)
+              : e.preventDefault()
+          }
           data-cy="nextLink"
           className="page-link"
           href="#next"

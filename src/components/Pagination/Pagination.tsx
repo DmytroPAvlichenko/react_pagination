@@ -22,11 +22,13 @@ export const Pagination: React.FC<Props> = ({
     <ul className="pagination">
       <li className={classNa('page-item', { disabled: currentPage === 1 })}>
         <a
-          onClick={e =>
-            currentPage > 1
-              ? () => onPageChange(currentPage - 1)
-              : e.preventDefault()
-          }
+          onClick={e => {
+            if (currentPage > 1) {
+              onPageChange(currentPage - 1);
+            } else {
+              e.preventDefault();
+            }
+          }}
           data-cy="prevLink"
           className="page-link"
           href="#prev"
@@ -58,12 +60,14 @@ export const Pagination: React.FC<Props> = ({
         })}
       >
         <a
-          onClick={e =>
-            currentPage < pages.length
-              ? () => onPageChange(currentPage + 1)
-              : e.preventDefault()
-          }
           data-cy="nextLink"
+          onClick={e => {
+            if (currentPage < pages.length) {
+              onPageChange(currentPage + 1);
+            } else {
+              e.preventDefault();
+            }
+          }}
           className="page-link"
           href="#next"
           aria-disabled={currentPage < pages.length ? 'false' : 'true'}
